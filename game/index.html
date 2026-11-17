@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOVA DRIFT — a neon arena survival shooter</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="960" height="600"></canvas>
+
+  <div id="hud" class="hidden">
+    <div class="hud-left">
+      <div class="hud-label">SCORE</div>
+      <div id="hud-score">0</div>
+      <div id="hud-combo" class="combo hidden">COMBO ×<span id="hud-combo-n">1</span></div>
+    </div>
+    <div class="hud-center">
+      <div class="hud-label">WAVE</div>
+      <div id="hud-wave">1</div>
+      <div id="hud-wave-state">INCOMING</div>
+    </div>
+    <div class="hud-right">
+      <div class="hud-label">HULL</div>
+      <div id="hud-hull" class="hearts">♥♥♥</div>
+      <div id="hud-best">BEST 0</div>
+    </div>
+    <div id="hud-powers"></div>
+    <div id="hud-dash"><div id="hud-dash-fill"></div><span>DASH</span></div>
+  </div>
+
+  <div id="screen-title" class="screen">
+    <div class="title-kicker">MAKE.FUN · BEST GAME 01</div>
+    <h1>NOVA<span>DRIFT</span></h1>
+    <p class="tagline">The drift is collapsing. Hold the arena. Chain the kills.<br>Survive the waves — and make every shot count.</p>
+    <div class="controls">
+      <div><kbd>W A S D</kbd><span>thrust</span></div>
+      <div><kbd>MOUSE</kbd><span>aim</span></div>
+      <div><kbd>HOLD CLICK</kbd><span>fire</span></div>
+      <div><kbd>SHIFT</kbd><span>dash</span></div>
+      <div><kbd>E</kbd><span>nova bomb</span></div>
+      <div><kbd>P</kbd><span>pause</span></div>
+    </div>
+    <button id="btn-start" class="big-btn">▶ &nbsp;LAUNCH</button>
+    <div class="title-foot">BEST SCORE&nbsp; <span id="title-best">0</span> · sound on for the full ride · <button id="btn-mute" class="mini-btn">SOUND: ON</button></div>
+    <div class="title-hint">click LAUNCH or press ENTER</div>
+  </div>
+
+  <div id="screen-over" class="screen hidden">
+    <div class="over-kicker">SIGNAL LOST</div>
+    <h2>GAME OVER</h2>
+    <div class="stats">
+      <div><div class="stat-label">SCORE</div><div id="over-score" class="stat-big">0</div></div>
+      <div><div class="stat-label">WAVE REACHED</div><div id="over-wave" class="stat-big">1</div></div>
+      <div><div class="stat-label">KILLS</div><div id="over-kills" class="stat-big">0</div></div>
+      <div><div class="stat-label">BEST COMBO</div><div id="over-combo" class="stat-big">×1</div></div>
+    </div>
+    <div id="over-record" class="record hidden">★ NEW BEST SCORE ★</div>
+    <button id="btn-restart" class="big-btn">↻ &nbsp;FLY AGAIN</button>
+    <div class="title-hint">or press R</div>
+  </div>
+
+  <div id="screen-pause" class="screen hidden">
+    <h2>PAUSED</h2>
+    <p class="tagline">The drift waits for no pilot. Take a breath.</p>
+    <button id="btn-resume" class="big-btn">▶ &nbsp;RESUME</button>
+    <div class="title-hint">or press P</div>
+  </div>
+
+  <div id="toast"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

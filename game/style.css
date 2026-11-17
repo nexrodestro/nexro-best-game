@@ -1,0 +1,146 @@
+/* NOVA DRIFT — presentation layer. Deep-space palette, neon glow, chunky HUD. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #02020a;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: #dfe9ff;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, #131a4a 0%, transparent 60%),
+    radial-gradient(900px 600px at 90% 110%, #3a0f3d 0%, transparent 55%),
+    #02020a;
+}
+
+#stage {
+  position: relative;
+  width: min(96vw, 1280px);
+  aspect-ratio: 960 / 600;
+  max-height: 96vh;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(90, 200, 255, 0.25),
+    0 0 60px rgba(53, 240, 255, 0.12),
+    0 30px 80px rgba(0, 0, 0, 0.8);
+}
+
+#game { display: block; width: 100%; height: 100%; background: #050514; cursor: crosshair; }
+
+/* Soft vignette so the arena reads as a framed cabinet, not a flat box. */
+#stage::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 50%, transparent 62%, rgba(0, 0, 0, 0.38) 100%);
+}
+
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  padding: 14px 18px;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(53, 240, 255, 0.55);
+}
+.hud-label { font-size: 11px; letter-spacing: 0.28em; color: #7fa8ff; }
+.hud-left { position: absolute; top: 14px; left: 18px; }
+#hud-score { font-size: 34px; line-height: 1; color: #fff; letter-spacing: 0.04em; }
+.combo { margin-top: 4px; font-size: 15px; color: #ffc857; text-shadow: 0 0 14px rgba(255, 200, 87, 0.8); }
+.hud-center { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); text-align: center; }
+#hud-wave { font-size: 34px; line-height: 1; color: #fff; }
+#hud-wave-state { font-size: 11px; letter-spacing: 0.3em; color: #ff3d81; margin-top: 3px; }
+.hud-right { position: absolute; top: 14px; right: 18px; text-align: right; }
+.hearts { font-size: 24px; letter-spacing: 0.1em; color: #ff3d81; text-shadow: 0 0 16px rgba(255, 61, 129, 0.9); line-height: 1.1; }
+.hearts .lost { color: rgba(255, 61, 129, 0.22); text-shadow: none; }
+#hud-best { font-size: 12px; letter-spacing: 0.18em; color: #8fa8d8; margin-top: 4px; }
+#hud-powers { position: absolute; left: 18px; bottom: 14px; display: flex; gap: 8px; }
+.power-chip {
+  padding: 5px 10px; border-radius: 20px; font-size: 12px; letter-spacing: 0.08em;
+  background: rgba(53, 240, 255, 0.14); border: 1px solid rgba(53, 240, 255, 0.5); color: #aef6ff;
+}
+.power-chip.hot { background: rgba(255, 200, 87, 0.2); border-color: #ffc857; color: #ffe1a1; }
+#hud-dash {
+  position: absolute; right: 18px; bottom: 14px; width: 120px; height: 16px;
+  border: 1px solid rgba(127, 168, 255, 0.5); border-radius: 9px; overflow: hidden;
+  background: rgba(10, 14, 40, 0.6);
+}
+#hud-dash-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #35f0ff, #7c5cff); transition: width 0.08s linear; }
+#hud-dash span {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; letter-spacing: 0.3em; color: #dfe9ff;
+}
+
+/* ---------- Screens ---------- */
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; gap: 14px;
+  background: radial-gradient(700px 420px at 50% 42%, rgba(20, 28, 80, 0.55), rgba(2, 2, 10, 0.82));
+  backdrop-filter: blur(2px);
+  padding: 20px;
+}
+.title-kicker, .over-kicker {
+  font-size: 12px; letter-spacing: 0.42em; color: #7fa8ff; font-weight: 700;
+}
+.over-kicker { color: #ff3d81; }
+h1 {
+  font-size: clamp(48px, 9vw, 96px); line-height: 0.95; letter-spacing: 0.06em;
+  color: #fff;
+  text-shadow: 0 0 24px rgba(53, 240, 255, 0.9), 0 0 90px rgba(124, 92, 255, 0.7);
+}
+h1 span { color: #35f0ff; }
+h2 {
+  font-size: clamp(40px, 7vw, 72px); line-height: 1; letter-spacing: 0.1em; color: #fff;
+  text-shadow: 0 0 24px rgba(255, 61, 129, 0.9), 0 0 80px rgba(255, 61, 129, 0.5);
+}
+.tagline { font-size: 16px; line-height: 1.55; color: #b9c8ee; max-width: 560px; }
+.controls {
+  display: grid; grid-template-columns: repeat(3, auto); gap: 8px 22px;
+  margin: 6px 0; font-size: 13px;
+}
+.controls div { display: flex; align-items: center; gap: 8px; }
+.controls span { color: #8fa8d8; letter-spacing: 0.06em; }
+kbd {
+  font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  padding: 4px 8px; border-radius: 6px; color: #dfe9ff;
+  background: rgba(127, 168, 255, 0.14); border: 1px solid rgba(127, 168, 255, 0.55);
+  box-shadow: 0 2px 0 rgba(127, 168, 255, 0.35);
+}
+.big-btn {
+  font-family: inherit; font-size: 20px; font-weight: 800; letter-spacing: 0.22em;
+  color: #04121a; background: linear-gradient(90deg, #35f0ff, #7cf29b);
+  border: none; border-radius: 999px; padding: 14px 42px; cursor: pointer;
+  box-shadow: 0 0 28px rgba(53, 240, 255, 0.55), 0 6px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.big-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 44px rgba(53, 240, 255, 0.85), 0 8px 0 rgba(0, 0, 0, 0.35); }
+.big-btn:active { transform: translateY(1px) scale(0.99); }
+.mini-btn {
+  font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  color: #aef6ff; background: transparent; border: 1px solid rgba(53, 240, 255, 0.5);
+  border-radius: 999px; padding: 3px 10px; cursor: pointer;
+}
+.title-foot { font-size: 12px; letter-spacing: 0.14em; color: #8fa8d8; }
+.title-hint { font-size: 12px; letter-spacing: 0.2em; color: #5f74a8; }
+.stats { display: flex; gap: 34px; margin: 4px 0; }
+.stat-label { font-size: 11px; letter-spacing: 0.28em; color: #7fa8ff; margin-bottom: 4px; }
+.stat-big { font-size: 34px; font-weight: 800; color: #fff; text-shadow: 0 0 16px rgba(53, 240, 255, 0.6); }
+.record { font-size: 16px; font-weight: 800; letter-spacing: 0.24em; color: #ffc857; text-shadow: 0 0 18px rgba(255, 200, 87, 0.9); animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.55; } }
+
+/* ---------- Toast ---------- */
+#toast {
+  position: absolute; top: 74px; left: 50%; transform: translateX(-50%);
+  font-size: 15px; font-weight: 800; letter-spacing: 0.3em; color: #ffe1a1;
+  text-shadow: 0 0 16px rgba(255, 200, 87, 0.9); opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+#toast.show { opacity: 1; }
